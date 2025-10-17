@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ DefendIQ</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body>
+  <section id="landing" class="landing">
+    <div class="logo-top-left" aria-hidden="true">🛡️</div>
+    <div class="landing-box">
+      <h1>DefendIQ</h1>
+      <p class="animated-text">Defend with Confidence, Grow with Ease!</p>
+      <div class="button-group">
+        <button id="trainingBtn" class="start-btn">Training Mode</button>
+        <button id="supportBtn" class="start-btn">Support Mode</button>
+      </div>
+    </div>
+  </section>
+  <section id="app" class="hidden">
+    <div class="nav-top">
+      <div class="brand">DefendIQ</div>
+      <div class="nav-right">
+        <button id="homeBtn" class="home-btn">Home</button>
+        <button id="refreshBtn" class="refresh-btn">Refresh</button>
+        <button id="feedbackBtn" class="feedback-btn">Feedback</button>
+      </div>
+    </div>
+    <div class="stats-area hidden">
+      <div class="module-title">Select a module to begin</div>
+      <div class="stats-right">
+        <div class="stat">Streak: <span id="streak">0</span></div>
+        <div class="stat">Points: <span id="points">0</span></div>
+        <div class="stat">Completion: <span id="completion">0%</span></div>
+        <div class="stat">Badges: <span id="badges">None</span></div>
+      </div>
+    </div>
+    <div class="module-area">
+      <div class="module-header">
+        <div class="module-actions">
+          <button id="closeModuleBtn" class="close-btn">Close</button>
+        </div>
+      </div>
+      <div class="module-body" id="moduleBody">
+        <div class="learning-tips" id="learningTips"></div>
+        <canvas id="globalProgressChart" style="max-width: 400px; margin: 20px auto;"></canvas>
+        <div class="affirmation" id="globalAffirmation"></div>
+      </div>
+    </div>
+  </section>
+  <script src="state.js"></script>
+  <script src="ui.js"></script>
+  <script src="api.js"></script>
+  <script src="canvas.js"></script>
+  <script src="quiz.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
