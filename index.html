@@ -1,64 +1,1398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🛡️ DefendIQ</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DefendIQ Enterprise - Cybersecurity Learning Platform</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section id="landing" class="landing">
-    <div class="logo-top-left" aria-hidden="true">🛡️</div>
-    <div class="landing-box">
-      <h1>DefendIQ</h1>
-      <p class="animated-text">Defend with Confidence, Grow with Ease!</p>
-      <div class="button-group">
-        <button id="trainingBtn" class="start-btn">Training Mode</button>
-        <button id="supportBtn" class="start-btn">Support Mode</button>
-      </div>
-    </div>
-  </section>
-  <section id="app" class="hidden">
-    <div class="nav-top">
-      <div class="brand">DefendIQ</div>
-      <div class="nav-right">
-        <button id="homeBtn" class="home-btn">Home</button>
-        <button id="refreshBtn" class="refresh-btn">Refresh</button>
-        <button id="feedbackBtn" class="feedback-btn">Feedback</button>
-      </div>
-    </div>
-    <div class="stats-area hidden">
-      <div class="module-title">Select a module to begin</div>
-      <div class="stats-right">
-        <div class="stat">Streak: <span id="streak">0</span></div>
-        <div class="stat">Points: <span id="points">0</span></div>
-        <div class="stat">Completion: <span id="completion">0%</span></div>
-        <div class="stat">Badges: <span id="badges">None</span></div>
-      </div>
-    </div>
-    <div class="module-area">
-      <div class="module-header">
-        <div class="module-actions">
-          <button id="closeModuleBtn" class="close-btn">Close</button>
+    <!-- Landing Page -->
+    <section id="landingPage" class="landing-page">
+        <div class="landing-container">
+            <div class="logo">🛡️</div>
+            <h1 class="title">DefendIQ Enterprise</h1>
+            <p class="slogan">Defend with Confidence, Grow with Ease!</p>
+            <div class="landing-stats">
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Departments</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">37</div>
+                    <div class="stat-label">Training Modules</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">94%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <button id="enterEnterprise" class="btn btn-primary btn-large">
+                Enter Enterprise Platform
+            </button>
+            <div class="landing-features">
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Department-Specific Training</h3>
+                    <p>Tailored cybersecurity education for NMS, HR, IT, Finance & Customer Service teams</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Support</h3>
+                    <p>Intelligent chatbot with predictive risk modeling and behavioral analytics</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Enterprise Analytics</h3>
+                    <p>Real-time compliance tracking and threat intelligence integration</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="module-body" id="moduleBody">
-        <div class="learning-tips" id="learningTips"></div>
-        <canvas id="globalProgressChart" style="max-width: 400px; margin: 20px auto;"></canvas>
-        <div class="affirmation" id="globalAffirmation"></div>
-      </div>
+    </section>
+
+    <!-- Department Selection Overlay -->
+    <div id="departmentSelection" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="logo">🛡️</div>
+            <h1>DefendIQ Enterprise</h1>
+            <p class="subtitle">Select Your Department</p>
+            <div class="department-cards">
+                <div class="department-card" data-department="nms">
+                    <div class="card-icon">🌐</div>
+                    <h3>NMS Command Center</h3>
+                    <p>Network Infrastructure Protection & Vendor Security</p>
+                    <div class="card-stats">
+                        <span>12 Modules</span>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+                <div class="department-card" data-department="hr">
+                    <div class="card-icon">👥</div>
+                    <h3>HR Guardian Hub</h3>
+                    <p>Data Privacy, Compliance & Employee Protection</p>
+                    <div class="card-stats">
+                        <span>10 Modules</span>
+                        <span>Compliance</span>
+                    </div>
+                </div>
+                <div class="department-card" data-department="it">
+                    <div class="card-icon">💻</div>
+                    <h3>IT Cyber Station</h3>
+                    <p>System Defense & Incident Response</p>
+                    <div class="card-stats">
+                        <span>15 Modules</span>
+                        <span>Technical</span>
+                    </div>
+                </div>
+                <div class="department-card" data-department="finance">
+                    <div class="card-icon">💰</div>
+                    <h3>Finance Security Hub</h3>
+                    <p>Financial Fraud Prevention & Transaction Security</p>
+                    <div class="card-stats">
+                        <span>8 Modules</span>
+                        <span>Financial</span>
+                    </div>
+                </div>
+                <div class="department-card" data-department="customer-service">
+                    <div class="card-icon">🎯</div>
+                    <h3>Customer Service Shield</h3>
+                    <p>Client Data Protection & Social Engineering Defense</p>
+                    <div class="card-stats">
+                        <span>7 Modules</span>
+                        <span>Client-Facing</span>
+                    </div>
+                </div>
+                <div class="department-card" data-department="executive">
+                    <div class="card-icon">📊</div>
+                    <h3>Executive Briefing</h3>
+                    <p>Security Overview & Department Analytics</p>
+                    <div class="card-stats">
+                        <span>Dashboard</span>
+                        <span>Management</span>
+                    </div>
+                </div>
+            </div>
+            <button id="backToLanding" class="btn btn-secondary" style="margin-top: 30px;">
+                Back to Landing Page
+            </button>
+        </div>
     </div>
-  </section>
-  <script src="state.js"></script>
-  <script src="ui.js"></script>
-  <script src="api.js"></script>
-  <script src="canvas.js"></script>
-  <script src="quiz.js"></script>
-  <script src="script.js"></script>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="app-container" style="display: none;">
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <div class="nav-brand">
+                <span class="nav-logo">🛡️</span>
+                <span class="nav-title">DefendIQ</span>
+                <span class="department-badge" id="departmentBadge">Enterprise</span>
+            </div>
+            <div class="nav-controls">
+                <button id="departmentSwitch" class="nav-btn">Switch Dept</button>
+                <button id="homeBtn" class="nav-btn">Home</button>
+                <button id="refreshBtn" class="nav-btn">Refresh</button>
+            </div>
+        </nav>
+
+        <!-- Training Mode -->
+        <section id="trainingMode" class="app-section">
+            <div class="dashboard">
+                <!-- Department Header -->
+                <div class="department-header" id="departmentHeader">
+                    <h1 id="deptTitle">Department Training Center</h1>
+                    <p id="deptDescription">Comprehensive cybersecurity training</p>
+                </div>
+
+                <!-- Enhanced Stats Overview -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-label">Security Score</div>
+                        <div class="stat-value" id="securityScore">85</div>
+                        <div class="stat-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Modules Completed</div>
+                        <div class="stat-value" id="modulesCompleted">8/12</div>
+                        <div class="stat-label">Current Streak: <span id="streakValue">5</span> days</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Threat Detection</div>
+                        <div class="stat-value" id="threatsDetected">94%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Risk Level</div>
+                        <div class="stat-value" id="riskLevel">Medium</div>
+                        <div class="stat-label" id="riskTrend">↓ Improving</div>
+                    </div>
+                </div>
+
+                <!-- Predictive Risk Alert -->
+                <div class="risk-alert" id="riskAlert" style="display: none;">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-content">
+                        <h4>Predictive Risk Alert</h4>
+                        <p id="alertMessage">Based on recent activity patterns, we've detected increased phishing risk in your department.</p>
+                    </div>
+                    <button class="alert-action" onclick="ui.dismissAlert()">Dismiss</button>
+                </div>
+
+                <!-- Module Grid -->
+                <div class="module-grid" id="moduleGrid">
+                    <!-- Modules will be dynamically loaded here -->
+                </div>
+
+                <!-- Module Content -->
+                <div class="module-content" id="moduleContent" style="display: none;">
+                    <div class="module-header">
+                        <h2 id="moduleTitle">Module Title</h2>
+                        <button id="closeModule" class="nav-btn">Back to Modules</button>
+                    </div>
+                    <div id="moduleBody">
+                        <!-- Module content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Mode -->
+        <section id="supportMode" class="app-section" style="display: none;">
+            <div class="support-container">
+                <div class="support-header">
+                    <h2 id="supportTitle">Cybersecurity Support</h2>
+                    <p id="supportSubtitle">Your AI Security Assistant</p>
+                    <div class="support-features">
+                        <span class="feature-tag">🤖 AI-Powered</span>
+                        <span class="feature-tag">📊 Behavioral Analytics</span>
+                        <span class="feature-tag">🔍 Threat Intelligence</span>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai-message fade-in">
+                            <p>Hello! I'm your DefendIQ AI assistant. I can help you with cybersecurity questions, threat analysis, compliance guidance, and personalized recommendations. How can I assist you today?</p>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" class="chat-input" placeholder="Ask about cybersecurity, threats, compliance, or get recommendations...">
+                        <button id="sendBtn" class="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button id="trainingTab" class="mode-tab active">Training</button>
+            <button id="supportTab" class="mode-tab">Support</button>
+        </div>
+    </div>
+
+    <!-- Canvas Background -->
+    <div class="canvas-container">
+        <canvas id="backgroundCanvas"></canvas>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #121212;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: #e0e0e0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    ">
+        <div style="font-size: 4rem; margin-bottom: 20px;">🛡️</div>
+        <h2 style="margin-bottom: 10px; color: #2e7d32;">DefendIQ Enterprise</h2>
+        <p style="margin-bottom: 30px; color: #9e9e9e;">Loading enterprise platform...</p>
+        <div style="width: 200px; height: 4px; background: #1e1e1e; border-radius: 2px;">
+            <div id="loadingProgress" style="height: 100%; background: #2e7d32; border-radius: 2px; width: 0%; transition: width 0.3s;"></div>
+        </div>
+        <div id="loadingStatus" style="margin-top: 15px; font-size: 0.9rem; color: #9e9e9e;">Initializing...</div>
+    </div>
+
+    <!-- All JavaScript Combined -->
+    <script>
+        // Combined application script
+        console.log('🚀 Starting DefendIQ Enterprise...');
+
+        // Update loading status
+        function updateLoadingStatus(message, percent) {
+            const status = document.getElementById('loadingStatus');
+            const progress = document.getElementById('loadingProgress');
+            if (status) status.textContent = message;
+            if (progress) progress.style.width = percent + '%';
+            console.log(`📦 ${message} (${percent}%)`);
+        }
+
+        // Enhanced departments data with new departments
+        const departments = {
+            nms: {
+                id: 'nms',
+                name: 'NMS Command Center',
+                description: 'Network Infrastructure Protection & Vendor Security',
+                color: '#2196f3',
+                icon: '🌐',
+                modules: [
+                    {
+                        id: 'nms-1',
+                        title: 'Network Infrastructure Security',
+                        icon: '🔒',
+                        description: 'Protecting network systems and configurations from social engineering attacks',
+                        difficulty: 'Advanced',
+                        estimatedTime: '45 min',
+                        objectives: [
+                            'Identify social engineering tactics targeting NMS teams',
+                            'Implement secure network change procedures',
+                            'Protect network configuration data',
+                            'Establish vendor security protocols'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'Understanding NMS Vulnerabilities',
+                                    content: 'Network Management Systems are prime targets for attackers seeking infrastructure access.'
+                                },
+                                {
+                                    title: 'Vendor Risk Management',
+                                    content: 'Establish secure protocols for third-party vendor access and communication.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'A vendor emails requesting emergency network configuration changes. What should you do first?',
+                                    options: [
+                                        'Implement the changes immediately',
+                                        'Verify the request through established secure channels',
+                                        'Forward to your manager',
+                                        'Ignore the request'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Always verify emergency requests through established secure communication channels before implementation.'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: 'nms-2',
+                        title: 'Incident Response Protocols',
+                        icon: '🚨',
+                        description: 'Emergency procedures for network security incidents',
+                        difficulty: 'Advanced',
+                        estimatedTime: '35 min',
+                        objectives: [
+                            'Execute network incident response',
+                            'Coordinate with security teams',
+                            'Communicate with stakeholders'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'Incident Response Framework',
+                                    content: 'Structured approach to handling network security incidents and breaches.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'During a network security incident, your first priority is:',
+                                    options: [
+                                        'Contain the incident',
+                                        'Notify all employees',
+                                        'Update social media',
+                                        'Continue normal operations'
+                                    ],
+                                    correct: 0,
+                                    explanation: 'Containing the incident prevents further damage and allows for proper investigation.'
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            hr: {
+                id: 'hr',
+                name: 'HR Guardian Hub',
+                description: 'Data Privacy, Compliance & Employee Protection',
+                color: '#9c27b0',
+                icon: '👥',
+                modules: [
+                    {
+                        id: 'hr-1',
+                        title: 'Employee Data Protection',
+                        icon: '📊',
+                        description: 'Safeguarding sensitive employee information and ensuring POPIA compliance',
+                        difficulty: 'Intermediate',
+                        estimatedTime: '40 min',
+                        objectives: [
+                            'Understand POPIA requirements',
+                            'Implement secure data handling',
+                            'Protect employee privacy',
+                            'Establish access controls'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'POPIA Compliance Essentials',
+                                    content: 'Understanding the Protection of Personal Information Act requirements for employee data handling and protection.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'Under POPIA, employee consent for data processing must be:',
+                                    options: [
+                                        'Optional',
+                                        'Implied',
+                                        'Specific and informed',
+                                        'Verbal only'
+                                    ],
+                                    correct: 2,
+                                    explanation: 'POPIA requires specific, informed consent for personal data processing.'
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            it: {
+                id: 'it',
+                name: 'IT Cyber Station',
+                description: 'System Defense & Incident Response',
+                color: '#f44336',
+                icon: '💻',
+                modules: [
+                    {
+                        id: 'it-1',
+                        title: 'Privilege Access Management',
+                        icon: '🔑',
+                        description: 'Managing administrative access and preventing privilege escalation',
+                        difficulty: 'Advanced',
+                        estimatedTime: '50 min',
+                        objectives: [
+                            'Implement least privilege principle',
+                            'Monitor administrative access',
+                            'Prevent privilege escalation',
+                            'Manage service accounts'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'Principle of Least Privilege',
+                                    content: 'Granting only the minimum access necessary for job functions to reduce attack surface.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'The principle of least privilege means:',
+                                    options: [
+                                        'Grant all access by default',
+                                        'Grant minimum necessary access',
+                                        'No access for anyone',
+                                        'Access based on seniority'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Users should have only the access necessary to perform their job functions.'
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            finance: {
+                id: 'finance',
+                name: 'Finance Security Hub',
+                description: 'Financial Fraud Prevention & Transaction Security',
+                color: '#4caf50',
+                icon: '💰',
+                modules: [
+                    {
+                        id: 'finance-1',
+                        title: 'Financial Fraud Prevention',
+                        icon: '🚫',
+                        description: 'Detecting and preventing financial fraud and social engineering attacks',
+                        difficulty: 'Intermediate',
+                        estimatedTime: '40 min',
+                        objectives: [
+                            'Identify financial fraud patterns',
+                            'Verify transaction authenticity',
+                            'Prevent social engineering attacks',
+                            'Implement financial controls'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'Financial Fraud Patterns',
+                                    content: 'Common patterns and red flags in financial fraud attempts targeting organizations.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'A CEO emails requesting urgent wire transfer. What should you do?',
+                                    options: [
+                                        'Process immediately',
+                                        'Verify through secondary channel',
+                                        'Ask accounting department',
+                                        'Ignore the request'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Always verify financial requests through established secondary communication channels.'
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            'customer-service': {
+                id: 'customer-service',
+                name: 'Customer Service Shield',
+                description: 'Client Data Protection & Social Engineering Defense',
+                color: '#ff9800',
+                icon: '🎯',
+                modules: [
+                    {
+                        id: 'cs-1',
+                        title: 'Client Data Protection',
+                        icon: '🛡️',
+                        description: 'Safeguarding customer information and preventing social engineering',
+                        difficulty: 'Intermediate',
+                        estimatedTime: '35 min',
+                        objectives: [
+                            'Protect customer data',
+                            'Verify client identities',
+                            'Prevent social engineering',
+                            'Follow data handling protocols'
+                        ],
+                        content: {
+                            materials: [
+                                {
+                                    title: 'Customer Data Security',
+                                    content: 'Best practices for protecting customer information during service interactions.'
+                                }
+                            ],
+                            quiz: [
+                                {
+                                    question: 'A caller claims to be a client and requests account information. What should you do first?',
+                                    options: [
+                                        'Provide the information',
+                                        'Verify identity through known channels',
+                                        'Transfer to manager',
+                                        'Hang up immediately'
+                                    ],
+                                    correct: 1,
+                                    explanation: 'Always verify client identity through established verification procedures.'
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+
+        updateLoadingStatus('Departments loaded', 20);
+
+        // Enhanced Department AI with advanced capabilities
+        const departmentAI = {
+            nms: {
+                greetings: [
+                    "Welcome to the NMS Command Center! Ready to strengthen our network defenses?",
+                    "Hello Network Warrior! Let's secure our infrastructure together.",
+                    "Greetings! Protecting our network backbone starts with awareness."
+                ],
+                expertise: ["network infrastructure", "vendor security", "social engineering", "incident response"],
+                responses: {
+                    'social engineering': "Social engineering attacks often target NMS teams for network access. Always verify unusual requests through multiple channels and maintain strict change control procedures.",
+                    'vendor security': "Vendor access should follow the principle of least privilege and be regularly audited. Implement multi-factor authentication for all vendor access points.",
+                    'incident response': "Network incidents require immediate containment and coordinated response. Follow established escalation procedures and maintain communication logs."
+                }
+            },
+            hr: {
+                greetings: [
+                    "Welcome to HR Guardian Hub! Let's protect our most valuable asset - our people.",
+                    "Hello Data Protector! Ready to master privacy and compliance?",
+                    "Greetings! Safeguarding employee data is our top priority."
+                ],
+                expertise: ["data privacy", "POPIA compliance", "employee protection", "recruitment security"],
+                responses: {
+                    'POPIA': "The Protection of Personal Information Act requires specific consent, secure data handling practices, and breach notification protocols. Regular audits ensure compliance.",
+                    'data breach': "HR plays a critical role in data breach response. Immediate steps include containment, assessment, notification per POPIA requirements, and employee support.",
+                    'recruitment': "Secure recruitment processes prevent social engineering and identity fraud. Verify all candidate information through official channels."
+                }
+            },
+            it: {
+                greetings: [
+                    "Welcome to IT Cyber Station! Let's fortify our digital defenses.",
+                    "Hello Security Engineer! Ready to master system protection?",
+                    "Greetings! Protecting our systems requires constant vigilance and expertise."
+                ],
+                expertise: ["system security", "access control", "incident response", "security tools"],
+                responses: {
+                    'privilege escalation': "Implement strict access controls, regular privilege reviews, and monitor for unusual privilege elevation attempts. Use role-based access control systems.",
+                    'security tools': "Proper configuration and monitoring of security tools is essential. Ensure SIEM systems are properly tuned and alert thresholds are set appropriately.",
+                    'incident response': "IT teams must lead coordinated incident response with clear communication channels. Document all actions for post-incident analysis."
+                }
+            },
+            finance: {
+                greetings: [
+                    "Welcome to Finance Security Hub! Let's protect our financial integrity.",
+                    "Hello Financial Guardian! Ready to combat fraud and secure transactions?",
+                    "Greetings! Financial security requires precision and vigilance."
+                ],
+                expertise: ["financial fraud", "transaction security", "social engineering", "compliance"],
+                responses: {
+                    'financial fraud': "Financial fraud often involves social engineering and unauthorized transactions. Implement multi-layer verification for all financial transactions.",
+                    'transaction security': "All financial transactions require dual verification and should follow established approval workflows. Monitor for unusual transaction patterns.",
+                    'compliance': "Financial compliance requires accurate record-keeping, regular audits, and adherence to financial regulations and internal controls."
+                }
+            },
+            'customer-service': {
+                greetings: [
+                    "Welcome to Customer Service Shield! Let's protect our client relationships.",
+                    "Hello Client Protector! Ready to secure customer interactions?",
+                    "Greetings! Client trust is built on security and professionalism."
+                ],
+                expertise: ["client data", "social engineering", "verification", "communication security"],
+                responses: {
+                    'client data': "Customer data must be protected according to POPIA requirements. Only access necessary information and verify client identity before sharing details.",
+                    'social engineering': "Social engineers often target customer service for client information. Always verify caller identity through multiple questions or callback procedures.",
+                    'verification': "Establish robust client verification procedures including security questions, callback verification, and document validation for sensitive requests."
+                }
+            }
+        };
+
+        // State management
+        const state = {
+            appState: null,
+
+            getDefaultState() {
+                return {
+                    currentDepartment: null,
+                    currentMode: 'training',
+                    userProfile: {
+                        name: '',
+                        employeeId: '',
+                        department: '',
+                        role: '',
+                        knowledgeLevel: 'beginner',
+                        riskScore: 50
+                    },
+                    departmentProgress: {
+                        nms: this.createDepartmentState('nms'),
+                        hr: this.createDepartmentState('hr'),
+                        it: this.createDepartmentState('it'),
+                        finance: this.createDepartmentState('finance'),
+                        'customer-service': this.createDepartmentState('customer-service')
+                    },
+                    chatHistory: [],
+                    behavioralPatterns: {
+                        loginTimes: [],
+                        moduleCompletionRate: 0,
+                        averageQuizScore: 0,
+                        riskTrend: 'stable'
+                    },
+                    lastActivity: new Date().toISOString()
+                };
+            },
+
+            createDepartmentState(departmentId) {
+                const deptModules = departments[departmentId]?.modules || [];
+                return {
+                    departmentId: departmentId,
+                    modules: deptModules.map(module => ({
+                        id: module.id,
+                        completed: false,
+                        progress: 0,
+                        quizScore: 0,
+                        timeSpent: 0
+                    })),
+                    overallScore: 0,
+                    completedModules: 0,
+                    riskLevel: 'medium',
+                    lastTraining: null
+                };
+            },
+
+            loadState() {
+                try {
+                    const savedState = localStorage.getItem('defendIQEnterprise');
+                    if (savedState) {
+                        this.appState = JSON.parse(savedState);
+                    } else {
+                        this.appState = this.getDefaultState();
+                    }
+                } catch (error) {
+                    this.appState = this.getDefaultState();
+                }
+            },
+
+            saveState() {
+                if (this.appState) {
+                    try {
+                        this.appState.lastActivity = new Date().toISOString();
+                        localStorage.setItem('defendIQEnterprise', JSON.stringify(this.appState));
+                    } catch (error) {
+                        console.error('Save failed:', error);
+                    }
+                }
+            },
+
+            setCurrentDepartment(departmentId) {
+                if (this.appState) {
+                    this.appState.currentDepartment = departmentId;
+                    this.appState.userProfile.department = departmentId;
+                    this.saveState();
+                }
+            },
+
+            getCurrentDepartment() {
+                return this.appState?.currentDepartment || null;
+            },
+
+            getDepartmentState(departmentId) {
+                return this.appState?.departmentProgress[departmentId] || this.createDepartmentState(departmentId);
+            },
+
+            updateBehavioralPatterns(pattern, value) {
+                if (this.appState) {
+                    this.appState.behavioralPatterns[pattern] = value;
+                    this.saveState();
+                }
+            },
+
+            calculateRiskScore() {
+                // Simple risk calculation based on activity patterns
+                if (!this.appState) return 50;
+                
+                const patterns = this.appState.behavioralPatterns;
+                let riskScore = 50;
+                
+                // Adjust based on completion rate
+                if (patterns.moduleCompletionRate < 30) riskScore += 20;
+                if (patterns.averageQuizScore < 70) riskScore += 15;
+                
+                return Math.min(Math.max(riskScore, 0), 100);
+            }
+        };
+
+        updateLoadingStatus('State management ready', 40);
+
+        // Enhanced UI management with Support mode
+        const ui = {
+            init() {
+                updateLoadingStatus('Initializing UI...', 60);
+                this.setupEventListeners();
+                this.showLandingPage();
+                updateLoadingStatus('UI ready', 80);
+            },
+
+            showLandingPage() {
+                const landingPage = document.getElementById('landingPage');
+                const departmentSelection = document.getElementById('departmentSelection');
+                const appContainer = document.getElementById('appContainer');
+                
+                if (landingPage) landingPage.style.display = 'flex';
+                if (departmentSelection) departmentSelection.style.display = 'none';
+                if (appContainer) appContainer.style.display = 'none';
+            },
+
+            showDepartmentSelection() {
+                const landingPage = document.getElementById('landingPage');
+                const departmentSelection = document.getElementById('departmentSelection');
+                const appContainer = document.getElementById('appContainer');
+                
+                if (landingPage) landingPage.style.display = 'none';
+                if (departmentSelection) departmentSelection.style.display = 'flex';
+                if (appContainer) appContainer.style.display = 'none';
+            },
+
+            showApp() {
+                const landingPage = document.getElementById('landingPage');
+                const departmentSelection = document.getElementById('departmentSelection');
+                const appContainer = document.getElementById('appContainer');
+                
+                if (landingPage) landingPage.style.display = 'none';
+                if (departmentSelection) departmentSelection.style.display = 'none';
+                if (appContainer) appContainer.style.display = 'block';
+            },
+
+            selectDepartment(departmentId) {
+                state.setCurrentDepartment(departmentId);
+                this.showApp();
+                this.updateDepartmentUI();
+                this.showTrainingMode();
+                this.checkPredictiveRisk();
+            },
+
+            updateDepartmentUI() {
+                const departmentId = state.getCurrentDepartment();
+                const department = departments[departmentId];
+                
+                if (department) {
+                    const deptTitle = document.getElementById('deptTitle');
+                    const deptDescription = document.getElementById('deptDescription');
+                    const departmentBadge = document.getElementById('departmentBadge');
+                    
+                    if (deptTitle) deptTitle.textContent = department.name;
+                    if (deptDescription) deptDescription.textContent = department.description;
+                    if (departmentBadge) {
+                        departmentBadge.textContent = department.name;
+                        departmentBadge.style.background = department.color;
+                    }
+                    
+                    this.loadDepartmentModules();
+                    this.updateDepartmentStats();
+                }
+            },
+
+            loadDepartmentModules() {
+                const departmentId = state.getCurrentDepartment();
+                const department = departments[departmentId];
+                const moduleGrid = document.getElementById('moduleGrid');
+                
+                if (moduleGrid && department) {
+                    moduleGrid.innerHTML = '';
+                    
+                    department.modules.forEach(module => {
+                        const moduleCard = this.createModuleCard(module, departmentId);
+                        moduleGrid.appendChild(moduleCard);
+                    });
+                }
+            },
+
+            createModuleCard(module, departmentId) {
+                const deptState = state.getDepartmentState(departmentId);
+                const moduleProgress = deptState.modules.find(m => m.id === module.id) || { progress: 0, completed: false };
+                
+                const card = document.createElement('div');
+                card.className = `module-card ${moduleProgress.completed ? 'completed' : moduleProgress.progress > 0 ? 'in-progress' : ''}`;
+                card.innerHTML = `
+                    <div class="module-header-card">
+                        <div class="module-icon">${module.icon}</div>
+                        <div>
+                            <h3>${module.title}</h3>
+                            <div class="module-meta">
+                                <span>${module.difficulty}</span>
+                                <span>${module.estimatedTime}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="module-description">${module.description}</p>
+                    <div class="module-progress">
+                        <div class="progress-text">
+                            <span>Progress</span>
+                            <span>${moduleProgress.progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${moduleProgress.progress}%"></div>
+                        </div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    this.openModule(module, departmentId);
+                });
+                
+                return card;
+            },
+
+            openModule(module, departmentId) {
+                const moduleContent = document.getElementById('moduleContent');
+                const moduleTitle = document.getElementById('moduleTitle');
+                const moduleBody = document.getElementById('moduleBody');
+                
+                if (moduleContent && moduleTitle && moduleBody) {
+                    moduleTitle.textContent = module.title;
+                    moduleBody.innerHTML = this.createModuleContent(module, departmentId);
+                    
+                    document.getElementById('moduleGrid').style.display = 'none';
+                    moduleContent.style.display = 'block';
+                }
+            },
+
+            createModuleContent(module, departmentId) {
+                return `
+                    <div class="module-overview">
+                        <h3>Learning Objectives</h3>
+                        <ul class="objectives-list">
+                            ${module.objectives.map(obj => `<li>${obj}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="learning-materials">
+                        <h3>Learning Materials</h3>
+                        ${module.content.materials.map(material => `
+                            <div class="material-item">
+                                <h4>${material.title}</h4>
+                                <p>${material.content}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-section">
+                        <h3>Knowledge Check</h3>
+                        <p>Test your understanding with this quick quiz.</p>
+                        <button class="btn btn-primary" onclick="quiz.startQuiz('${departmentId}', '${module.id}')">
+                            Start Quiz
+                        </button>
+                    </div>
+                `;
+            },
+
+            showTrainingMode() {
+                const trainingMode = document.getElementById('trainingMode');
+                const supportMode = document.getElementById('supportMode');
+                const trainingTab = document.getElementById('trainingTab');
+                const supportTab = document.getElementById('supportTab');
+                
+                if (trainingMode && supportMode) {
+                    trainingMode.style.display = 'block';
+                    supportMode.style.display = 'none';
+                }
+                if (trainingTab && supportTab) {
+                    trainingTab.classList.add('active');
+                    supportTab.classList.remove('active');
+                }
+            },
+
+            showSupportMode() {
+                const trainingMode = document.getElementById('trainingMode');
+                const supportMode = document.getElementById('supportMode');
+                const trainingTab = document.getElementById('trainingTab');
+                const supportTab = document.getElementById('supportTab');
+                
+                if (trainingMode && supportMode) {
+                    trainingMode.style.display = 'none';
+                    supportMode.style.display = 'block';
+                }
+                if (trainingTab && supportTab) {
+                    trainingTab.classList.remove('active');
+                    supportTab.classList.add('active');
+                }
+                
+                this.updateSupportView();
+            },
+
+            updateSupportView() {
+                const departmentId = state.getCurrentDepartment();
+                const department = departments[departmentId];
+                const aiConfig = departmentAI[departmentId];
+                const chatMessages = document.getElementById('chatMessages');
+                
+                if (chatMessages && aiConfig && department) {
+                    // Only update if empty or very few messages
+                    if (chatMessages.children.length <= 1) {
+                        const greeting = this.getTimeBasedGreeting();
+                        const randomGreeting = aiConfig.greetings[Math.floor(Math.random() * aiConfig.greetings.length)];
+                        const firstMessage = chatMessages.querySelector('.ai-message');
+                        if (firstMessage) {
+                            firstMessage.querySelector('p').textContent = `${greeting}! ${randomGreeting} I specialize in ${department.name.toLowerCase()} security with advanced threat intelligence. How can I assist you today?`;
+                        }
+                    }
+                }
+            },
+
+            getTimeBasedGreeting() {
+                const hour = new Date().getHours();
+                if (hour >= 5 && hour < 12) return 'Good morning';
+                else if (hour >= 12 && hour < 14) return 'Good day';
+                else if (hour >= 14 && hour < 18) return 'Good afternoon';
+                else if (hour >= 18 && hour < 22) return 'Good evening';
+                else return 'Good night';
+            },
+
+            updateDepartmentStats() {
+                const departmentId = state.getCurrentDepartment();
+                if (!departmentId) return;
+
+                const deptState = state.getDepartmentState(departmentId);
+                const completedModules = deptState.modules.filter(m => m.completed).length;
+                const totalModules = deptState.modules.length;
+                const completionRate = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
+                
+                // Update UI elements
+                const securityScore = document.getElementById('securityScore');
+                const modulesCompleted = document.getElementById('modulesCompleted');
+                const threatsDetected = document.getElementById('threatsDetected');
+                const riskLevel = document.getElementById('riskLevel');
+                const riskTrend = document.getElementById('riskTrend');
+                
+                if (securityScore) securityScore.textContent = completionRate;
+                if (modulesCompleted) modulesCompleted.textContent = `${completedModules}/${totalModules}`;
+                if (threatsDetected) {
+                    const detectionRate = Math.min(70 + (completionRate * 0.3), 98);
+                    threatsDetected.textContent = `${Math.round(detectionRate)}%`;
+                }
+                if (riskLevel) {
+                    const risk = state.calculateRiskScore();
+                    riskLevel.textContent = risk < 30 ? 'Low' : risk < 70 ? 'Medium' : 'High';
+                    riskLevel.style.color = risk < 30 ? '#4caf50' : risk < 70 ? '#ff9800' : '#f44336';
+                }
+                if (riskTrend) {
+                    riskTrend.textContent = '↓ Improving';
+                    riskTrend.style.color = '#4caf50';
+                }
+            },
+
+            checkPredictiveRisk() {
+                // Simulate predictive risk analysis
+                const riskScore = state.calculateRiskScore();
+                if (riskScore > 70) {
+                    this.showRiskAlert('High risk detected: Consider completing more training modules to improve your security posture.');
+                } else if (riskScore > 50) {
+                    this.showRiskAlert('Medium risk: Regular training completion helps maintain optimal security awareness.');
+                }
+            },
+
+            showRiskAlert(message) {
+                const alert = document.getElementById('riskAlert');
+                const alertMessage = document.getElementById('alertMessage');
+                if (alert && alertMessage) {
+                    alertMessage.textContent = message;
+                    alert.style.display = 'flex';
+                }
+            },
+
+            dismissAlert() {
+                const alert = document.getElementById('riskAlert');
+                if (alert) {
+                    alert.style.display = 'none';
+                }
+            },
+
+            addChatMessage(text, sender) {
+                const chatMessages = document.getElementById('chatMessages');
+                if (!chatMessages) return;
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message fade-in`;
+                messageDiv.innerHTML = `<p>${text}</p>`;
+                chatMessages.appendChild(messageDiv);
+                
+                // Add to chat history
+                state.addChatMessage(sender, text);
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            },
+
+            setupEventListeners() {
+                // Landing page
+                const enterEnterprise = document.getElementById('enterEnterprise');
+                if (enterEnterprise) {
+                    enterEnterprise.addEventListener('click', () => this.showDepartmentSelection());
+                }
+
+                // Department selection
+                const backToLanding = document.getElementById('backToLanding');
+                if (backToLanding) {
+                    backToLanding.addEventListener('click', () => this.showLandingPage());
+                }
+
+                document.querySelectorAll('.department-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const department = card.dataset.department;
+                        this.selectDepartment(department);
+                    });
+                });
+
+                // Navigation
+                const departmentSwitch = document.getElementById('departmentSwitch');
+                if (departmentSwitch) {
+                    departmentSwitch.addEventListener('click', () => this.showDepartmentSelection());
+                }
+
+                const homeBtn = document.getElementById('homeBtn');
+                if (homeBtn) {
+                    homeBtn.addEventListener('click', () => this.showTrainingMode());
+                }
+
+                // Mode tabs
+                const trainingTab = document.getElementById('trainingTab');
+                const supportTab = document.getElementById('supportTab');
+                
+                if (trainingTab) {
+                    trainingTab.addEventListener('click', () => this.showTrainingMode());
+                }
+                if (supportTab) {
+                    supportTab.addEventListener('click', () => this.showSupportMode());
+                }
+
+                // Close module
+                const closeModule = document.getElementById('closeModule');
+                if (closeModule) {
+                    closeModule.addEventListener('click', () => this.closeModuleView());
+                }
+
+                // Chat functionality
+                const sendBtn = document.getElementById('sendBtn');
+                const chatInput = document.getElementById('chatInput');
+                
+                if (sendBtn && chatInput) {
+                    sendBtn.addEventListener('click', () => this.sendMessage());
+                    chatInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') this.sendMessage();
+                    });
+                }
+            },
+
+            closeModuleView() {
+                const moduleContent = document.getElementById('moduleContent');
+                const moduleGrid = document.getElementById('moduleGrid');
+                
+                if (moduleContent && moduleGrid) {
+                    moduleContent.style.display = 'none';
+                    moduleGrid.style.display = 'grid';
+                }
+            },
+
+            sendMessage() {
+                const chatInput = document.getElementById('chatInput');
+                const message = chatInput.value.trim();
+                
+                if (!message) return;
+                
+                // Add user message to chat
+                this.addChatMessage(message, 'user');
+                chatInput.value = '';
+                
+                // Process message and generate AI response
+                setTimeout(() => {
+                    const response = api.generateAIResponse(message);
+                    this.addChatMessage(response, 'ai');
+                }, 1000);
+            },
+
+            showNotification(message, type = 'info') {
+                console.log(`[NOTIFICATION ${type}]: ${message}`);
+                // Could be enhanced with toast notifications
+            }
+        };
+
+        updateLoadingStatus('UI components loaded', 90);
+
+        // Enhanced API system with advanced AI capabilities
+        const api = {
+            generateAIResponse(userMessage) {
+                const departmentId = state.getCurrentDepartment();
+                const department = departments[departmentId];
+                const aiConfig = departmentAI[departmentId];
+                
+                if (!aiConfig) {
+                    return "I'm here to help with cybersecurity. How can I assist you today?";
+                }
+                
+                const lowerMessage = userMessage.toLowerCase();
+                
+                // Check for department-specific expertise
+                for (const [topic, response] of Object.entries(aiConfig.responses)) {
+                    if (lowerMessage.includes(topic)) {
+                        return this.enhanceResponse(response, department);
+                    }
+                }
+                
+                // Advanced threat intelligence responses
+                if (lowerMessage.includes('threat') || lowerMessage.includes('attack')) {
+                    return this.generateThreatIntelligence(departmentId);
+                }
+                
+                if (lowerMessage.includes('compliance') || lowerMessage.includes('regulation')) {
+                    return this.generateComplianceGuidance(departmentId);
+                }
+                
+                if (lowerMessage.includes('risk') || lowerMessage.includes('vulnerability')) {
+                    return this.generateRiskAssessment(departmentId);
+                }
+                
+                // Behavioral analytics response
+                if (lowerMessage.includes('progress') || lowerMessage.includes('how am i doing')) {
+                    return this.generateProgressAnalysis(departmentId);
+                }
+                
+                // Default intelligent response
+                return this.generateIntelligentResponse(lowerMessage, department, aiConfig);
+            },
+
+            enhanceResponse(baseResponse, department) {
+                return `${baseResponse} \n\n*Based on current threat intelligence and ${department.name} best practices.*`;
+            },
+
+            generateThreatIntelligence(departmentId) {
+                const threats = {
+                    nms: "Current network infrastructure threats include sophisticated vendor impersonation attacks and DNS spoofing attempts. Ensure all network changes follow established verification protocols.",
+                    hr: "HR departments are seeing increased targeted phishing for employee data. Implement multi-factor verification for all sensitive data requests.",
+                    it: "IT teams face rising privilege escalation attempts through compromised service accounts. Review service account permissions and monitor for unusual activity.",
+                    finance: "Financial departments are targeted by Business Email Compromise (BEC) attacks. Implement dual approval for all financial transactions.",
+                    'customer-service': "Customer service faces social engineering attempts for client data. Strengthen client verification procedures."
+                };
+                
+                return threats[departmentId] || "Current threat landscape shows increased social engineering across all departments. Maintain vigilance and follow established security protocols.";
+            },
+
+            generateComplianceGuidance(departmentId) {
+                const compliance = {
+                    nms: "NMS compliance requires network change documentation, access logs, and vendor security assessments. Regular audits ensure adherence to infrastructure security standards.",
+                    hr: "HR must maintain POPIA compliance through data minimization, proper consent mechanisms, and breach notification procedures. Annual privacy impact assessments are recommended.",
+                    it: "IT compliance involves system access controls, security tool configurations, and incident response documentation. Regular security assessments validate compliance.",
+                    finance: "Financial compliance requires transaction auditing, fraud detection systems, and financial control documentation. Regular financial audits are essential.",
+                    'customer-service': "Customer service compliance focuses on data handling procedures, client verification protocols, and communication security. Regular training ensures adherence."
+                };
+                
+                return compliance[departmentId] || "Maintain compliance through documented procedures, regular training, and ongoing security assessments specific to your department's responsibilities.";
+            },
+
+            generateRiskAssessment(departmentId) {
+                const deptState = state.getDepartmentState(departmentId);
+                const completionRate = deptState.modules.length > 0 ? 
+                    (deptState.completedModules / deptState.modules.length) * 100 : 0;
+                
+                let riskLevel = 'Low';
+                if (completionRate < 30) riskLevel = 'High';
+                else if (completionRate < 70) riskLevel = 'Medium';
+                
+                return `Based on your training progress (${Math.round(completionRate)}% completion), your ${departmentId.toUpperCase()} department shows ${riskLevel} risk level. ${riskLevel === 'High' ? 'Consider prioritizing module completion to improve security posture.' : 'Continue regular training to maintain strong security awareness.'}`;
+            },
+
+            generateProgressAnalysis(departmentId) {
+                const deptState = state.getDepartmentState(departmentId);
+                const completed = deptState.completedModules;
+                const total = deptState.modules.length;
+                const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+                
+                return `You've completed ${completed} of ${total} modules (${completionRate}%). ${completionRate >= 80 ? 'Excellent progress! You have strong security awareness.' : completionRate >= 50 ? 'Good progress! Continue with the remaining modules.' : 'Focus on completing more modules to strengthen your security knowledge.'}`;
+            },
+
+            generateIntelligentResponse(message, department, aiConfig) {
+                // Check for keywords in department expertise
+                for (const keyword of aiConfig.expertise) {
+                    if (message.includes(keyword)) {
+                        return `Regarding ${keyword} in ${department.name}, I recommend reviewing our training modules and following established security protocols. Would you like specific guidance on this topic?`;
+                    }
+                }
+                
+                // General intelligent response
+                return `I understand you're asking about cybersecurity. In the context of ${department.name}, I can provide guidance on security best practices, threat awareness, compliance requirements, or specific security concerns. Could you provide more details about what you'd like to know?`;
+            }
+        };
+
+        // Quiz system
+        const quiz = {
+            startQuiz(departmentId, moduleId) {
+                const department = departments[departmentId];
+                const module = department.modules.find(m => m.id === moduleId);
+                
+                if (module && module.content.quiz) {
+                    const firstQuestion = module.content.quiz[0];
+                    const moduleBody = document.getElementById('moduleBody');
+                    
+                    if (moduleBody) {
+                        moduleBody.innerHTML = `
+                            <div class="quiz-container">
+                                <h3>Quiz: ${module.title}</h3>
+                                <div class="quiz-question">
+                                    <h4>${firstQuestion.question}</h4>
+                                    <div class="quiz-options">
+                                        ${firstQuestion.options.map((option, index) => `
+                                            <button class="quiz-option" onclick="quiz.answerQuestion(${index}, ${firstQuestion.correct}, '${departmentId}', '${moduleId}')">
+                                                ${option}
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            },
+
+            answerQuestion(selectedIndex, correctIndex, departmentId, moduleId) {
+                const isCorrect = selectedIndex === correctIndex;
+                const moduleBody = document.getElementById('moduleBody');
+                const department = departments[departmentId];
+                const module = department.modules.find(m => m.id === moduleId);
+                const question = module.content.quiz[0];
+                
+                if (moduleBody) {
+                    if (isCorrect) {
+                        moduleBody.innerHTML = `
+                            <div class="quiz-results">
+                                <h3>✅ Correct!</h3>
+                                <p>${question.explanation}</p>
+                                <p><strong>Well done! You've demonstrated understanding of this topic.</strong></p>
+                                <button class="btn btn-primary" onclick="ui.closeModuleView(); ui.updateDepartmentStats();">
+                                    Return to Modules
+                                </button>
+                            </div>
+                        `;
+                        
+                        // Update progress
+                        const deptState = state.getDepartmentState(departmentId);
+                        const moduleProgress = deptState.modules.find(m => m.id === moduleId);
+                        if (moduleProgress) {
+                            moduleProgress.completed = true;
+                            moduleProgress.progress = 100;
+                            moduleProgress.quizScore = 100;
+                            deptState.completedModules++;
+                            state.saveState();
+                            
+                            // Update behavioral patterns
+                            const totalScore = deptState.modules.reduce((sum, m) => sum + (m.quizScore || 0), 0);
+                            const averageScore = deptState.modules.length > 0 ? totalScore / deptState.modules.length : 0;
+                            state.updateBehavioralPatterns('averageQuizScore', averageScore);
+                            state.updateBehavioralPatterns('moduleCompletionRate', (deptState.completedModules / deptState.modules.length) * 100);
+                        }
+                    } else {
+                        moduleBody.innerHTML = `
+                            <div class="quiz-results">
+                                <h3>❌ Incorrect</h3>
+                                <p><strong>Correct answer:</strong> ${question.options[correctIndex]}</p>
+                                <p>${question.explanation}</p>
+                                <p>Review the material and try again to reinforce your learning.</p>
+                                <button class="btn btn-secondary" onclick="quiz.startQuiz('${departmentId}', '${moduleId}')">
+                                    Try Again
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+            }
+        };
+
+        updateLoadingStatus('All systems ready', 95);
+
+        // Canvas system
+        const canvas = {
+            init() {
+                const canvas = document.getElementById('backgroundCanvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    this.resizeCanvas(canvas, ctx);
+                    this.animate(canvas, ctx);
+                }
+            },
+
+            resizeCanvas(canvas, ctx) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                // Draw initial background
+                ctx.fillStyle = '#121212';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            },
+
+            animate(canvas, ctx) {
+                // Simple animated background
+                const draw = () => {
+                    ctx.fillStyle = 'rgba(18, 18, 18, 0.05)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw some moving particles
+                    const time = Date.now() * 0.001;
+                    for (let i = 0; i < 5; i++) {
+                        const x = (Math.sin(time + i) * 0.5 + 0.5) * canvas.width;
+                        const y = (Math.cos(time * 0.7 + i) * 0.5 + 0.5) * canvas.height;
+                        
+                        ctx.beginPath();
+                        ctx.arc(x, y, 2, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(46, 125, 50, 0.3)';
+                        ctx.fill();
+                    }
+                    
+                    requestAnimationFrame(draw);
+                };
+                
+                draw();
+            }
+        };
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLoadingStatus('Starting application...', 100);
+            
+            try {
+                // Load state first
+                state.loadState();
+                
+                // Initialize canvas
+                canvas.init();
+                
+                // Initialize UI
+                ui.init();
+                
+                // Hide loading indicator after a delay
+                setTimeout(() => {
+                    const loadingIndicator = document.getElementById('loadingIndicator');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                    console.log('🎯 DefendIQ Enterprise ready with advanced features!');
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Initialization failed:', error);
+                updateLoadingStatus('Initialization failed - check console', 100);
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const canvas = document.getElementById('backgroundCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                ctx.fillStyle = '#121212';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        });
+
+        console.log('📦 Enhanced DefendIQ Enterprise loaded successfully');
+    </script>
 </body>
 </html>
